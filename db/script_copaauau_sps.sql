@@ -84,8 +84,16 @@ begin
 	end if;
 end$$
 
-
-
+drop procedure if exists criarCliente$$
+create procedure criarCliente(pCpf varchar(15), pNome varchar(100), pSenha varchar(64))
+begin
+	insert into cliente(cd_cpf_cliente, nm_cliente, nm_senha) values (pCpf, pNome, pSenha);
+    select count(cd_figura) into fig from figura;
+	DECLARE i INT DEFAULT 0;
+	FOR i IN 1..fig DO
+		INSERT INTO album(cd_cpf_cliente, cd_figura, ic_possui) VALUES (pCpf, i, 0);
+	END FOR;
+END$$
 
 
 Delimiter ;

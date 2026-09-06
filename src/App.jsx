@@ -4,6 +4,7 @@ import Inicio from "./components/Inicio";
 import Album from "./components/Album";
 import Repetidas from "./components/Repetidas";
 import NovoCliente from "./components/NovoCliente";
+import CodigoVerificacao from "./components/CodigoVerificacao";
 
 export default function App() {
   return (
@@ -11,6 +12,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Login/>}/>
         <Route path="/novoCliente" element={<NovoCliente/>}/>
+        <Route path="/CodigoVerificacao" element={<CodigoVerificacao/>}/>
         <Route path="/inicio" element={<Inicio/>}>
           <Route index element={<Album/>}/>
           <Route path="repetidas" element={<Repetidas/>}/>

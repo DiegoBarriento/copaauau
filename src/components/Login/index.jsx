@@ -20,6 +20,10 @@ export default function Login() {
         setSenha(e.target.value);
     }
 
+    function btnCadastro() {
+        navegador('/novoCliente');
+    }
+
     function btnEntrar_Click() {
 
         setMensagem(null);
@@ -96,7 +100,7 @@ export default function Login() {
                     </p>
 
                     <div className="area_botoes">
-                        <button className="linkBotao">Cadastre-se</button>
+                        <button className="linkBotao" onClick={btnCadastro}>Cadastre-se</button>
                         <button className="linkBotao">Esqueci minha senha</button>
                         <button className="botao" onClick={btnEntrar_Click}>
                             <span className="material-symbols-outlined iconeBotao">login</span> Entrar

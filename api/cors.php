@@ -6,6 +6,7 @@ $ENV = $_SERVER['HTTP_HOST'] === 'https://www.copaauau.com.br'
 $CORS_ORIGINS = [
 	'development' => [
 		'http://localhost:5173',
+		'http://localhost:4000',
 	],
 	'production' => [
 		'https://www.copaauau.com.br',
