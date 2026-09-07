@@ -7,14 +7,14 @@ import { useEffect } from "react";
 
 export default function CodigoVerificacao() {
     const location = useLocation();
-    const [codigo, setCodigo] = useState("");
+    const [codigoEnviado, setCodigoEnviado] = useState("");
     const [carregando, setCarregando] = useState(false);
     const [mensagem, setMensagem] = useState(null);
     const [codigoVerificacao, setCodigoVerificacao] = useState("");
     const navegador = useNavigate();
 
-    const cliente = location.state?.cliente;
-    const status = location.state?.status;
+    const cliente = location.state.cliente;
+    const status = location.state.status;
 
     console.log(cliente.email);
     console.log(status);
@@ -24,21 +24,25 @@ export default function CodigoVerificacao() {
         setCarregando(true);
         axios.post("http://localhost/copaauau/api/enviarCodigo.php",
             {
-                'email': cliente.email
+                'email': cliente.email,
             },
             {
                 withCredentials: true,
             }
         ).then(function (resposta) {
-            // Tratar a resposta
-            console.log(resposta.data.codigo);
-            let codigoVerifi = resposta.data.codigo;
+            // const dados = typeof resposta.data === "string" ? JSON.parse(resposta.data.trim()) : resposta.data;
+            const dados = resposta.data;
+            if (dados == null || dados.codigo == null){
+                setMensagem("Erro ao enviar o código de verificação. Por favor, tente novamente.");
+            }
+            console.log(dados);
+
+            const codigoVerifi = String(dados.codigo);
+            console.log(codigoVerifi);
             setCodigoVerificacao(codigoVerifi);
-            console.log("Código de verificação enviado: " + codigoVerificacao);
             setMensagem('Codigo enviado com Sucesso! Verifique seu e-mail.');
         }).catch(function (erro) {
-            // Tratar o erro
-            setMensagem("Erro ao enviar o código de verificação. Por favor, tente novamente.");
+            setMensagem(erro.response.data.mensagem || erro.message || "Erro ao enviar o código de verificação.");
             console.log(erro);
         }).finally( function () {
             setCarregando(false);
@@ -47,11 +51,67 @@ export default function CodigoVerificacao() {
 
 
     function txtCodigo_Change(e) {
-        setCodigo(e.target.value);
+        setCodigoEnviado(e.target.value);
     }
 
     function criarNovoCliente() {
         console.log("novo cliente teste botao");
+        setCarregando(true);
+        axios.post("http://localhost/copaauau/api/criarnovocliente.php", 
+        {
+            /* conteudo do corpo JSON da requisicão */
+            'cpf' : cliente.cpf,
+            'nome' : cliente.nome,
+            'senha' :  cliente.senha,
+        },
+        {
+            withCredentials: true,
+        }
+        ).then(function (resposta) {
+        if (resposta.status === 200 && resposta.data) {
+            console.log(resposta.data);
+            // A resposta veio SEM erros
+            setMensagem("Conta criada com sucesso! Redirecionando...")
+             axios.post("http://localhost/copaauau/api/acessar.php",
+            {
+                "login": cliente.cpf,
+                "senha": cliente.senha
+            },
+            {
+                withCredentials: true,
+            }
+            ).then(function (resposta) {
+                if (resposta.status === 200 && resposta.data) {
+                    console.log(resposta.data);
+                    if ('mensagem' in resposta.data) {
+                        setMensagem(resposta.data.mensagem);
+                    } else {    
+                        localStorage.setItem('cliente', JSON.stringify(resposta.data.cliente));
+                        navegador('/inicio');
+                    }
+                }
+            })
+                .catch(function (error) {
+                    console.warn(error);
+                    // O que fazer se der erro na requisição
+                    setMensagem("Erro ao redirecionar! Tente Logar Novamente")
+                })
+                .finally(function () {
+                    setCarregando(false);
+                });
+        } 
+        })
+        .catch(function (error) {
+        console.warn(error);
+        // O que fazer se der erro na requisição
+            setMensagem(error.response.data.mensagem || "Erro ao se cadastrar! Tente novamente.")
+        
+        })
+        .finally(function () {
+        // O que fazer independente de ter dado erro ou não
+            setCarregando(false);
+        });
+
     }
 
     function recuperarSenha() {
@@ -61,15 +121,15 @@ export default function CodigoVerificacao() {
     function btnVerificar_click() {
         setMensagem(null);
 
-        if (codigo !== codigoVerificacao) {
+        if (codigoEnviado !== codigoVerificacao) {
             setMensagem("Código de verificação incorreto. Por favor, tente novamente.");
             return;
         }
 
-        if (status === 'novoCliente'){
+        if (status === 'novocliente'){
             criarNovoCliente();
         }
-        else if (status === 'recuperarSenha'){
+        else if (status === 'recuperarsenha'){
             recuperarSenha();
         }
         
@@ -80,12 +140,12 @@ export default function CodigoVerificacao() {
                 <section className="telaLogin">
                     <h1>Código de Veriicação</h1>
                     {carregando ? <Carregando/> : null}
-                    {mensagem != null ? <div>{mensagem}</div> : null}
+                    {mensagem !== null ? <div>{mensagem}</div> : null}
                     <p>
                         <input
                             placeholder="Informe o código enviado para seu E-mail"
                             type="number"
-                            value={codigo}
+                            value={codigoEnviado}
                             onChange={txtCodigo_Change}
                         />
                     </p>

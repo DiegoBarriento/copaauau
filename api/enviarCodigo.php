@@ -110,7 +110,7 @@
 // 	return true;
 // }
 
-require_once('exemplo.php');
+require_once __DIR__ . '/codigoFuncoes.php';
 
 require_once('cors.php');
 require_once('config.php');
@@ -144,9 +144,9 @@ try {
 	}
 	$email = $corpo['email'];
 	$codigo = gerarCodigo6Digitos();
-	EnviarEmailRecuperacao($email, $codigo);
+	EnviarEmail($email, $codigo);
 	http_response_code(200);
-	echo json_encode(['status' => 'true', 'codigo' => $codigo]);
+	echo json_encode(['status' => true, 'codigo' => $codigo]);
 } catch (Exception $erro) {
 	http_response_code(500);
 	echo json_encode(['status' => 'false', 'mensagem' => $erro->getMessage()]);

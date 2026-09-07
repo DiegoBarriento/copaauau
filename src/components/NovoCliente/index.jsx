@@ -119,7 +119,7 @@ export default function NovoCliente() {
             "senha": senha.trim()
         };
 
-        navegador('/CodigoVerificacao', {state: {status: 'novoCliente', cliente: cliente}})
+        navegador('/CodigoVerificacao', {state: {status: 'novocliente', cliente: cliente}})
 
     }
 

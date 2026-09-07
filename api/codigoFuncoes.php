@@ -1,0 +1,42 @@
+<?php
+use PHPMailer\PHPMailer\PHPMailer;
+
+require_once __DIR__ . '/PHPMailer/src/PHPMailer.php';
+require_once __DIR__ . '/PHPMailer/src/Exception.php';
+require_once __DIR__ . '/PHPMailer/src/SMTP.php';
+
+function gerarCodigo6Digitos()
+{
+    return str_pad((string) random_int(0, 999999), 6, '0', STR_PAD_LEFT);
+}
+
+function EnviarEmail($emailDestinatario, $codigo)
+{    
+
+    $mail = new PHPMailer(true);
+    $mail->isSMTP();
+    $mail->SMTPAuth = true;
+    $mail->SMTPSecure = 'ssl';
+    $mail->Host = 'smtp.hostinger.com';
+    $mail->Port = 465;
+    $mail->Username = 'recuperacao@copaclubeauau.com.br';
+    $mail->Sender = 'recuperacao@copaclubeauau.com.br';
+    $mail->Password = 'Em@il2026';
+    $mail->CharSet = 'UTF-8';
+    $mail->setFrom('recuperacao@copaclubeauau.com.br', 'Copa Clube Au Au');
+    $mail->addAddress($emailDestinatario);
+    $mail->isHTML(true);
+    $mail->Subject = " Verificação [Copa Clube Au Au]";
+    $conteudoEmail  = "<div style='margin:auto; width: 500px; background-color:#fff; border:thin solid #babaca;border-radius:4px;box-sizing: border-box; padding: 10px; text-align: center;'>";
+    $conteudoEmail .= "    <div style='text-align: center;'>";
+    $conteudoEmail .= "        <img src='https://copaclubeauau.com.br/images/logo.png' style='width: 250px;'>";
+    $conteudoEmail .= "    </div>";
+    $conteudoEmail .= "    <p>Use o código abaixo </p>";
+    $conteudoEmail .= "    <p><strong style='font-size:28px'>" . $codigo . "</strong></p>";
+    $conteudoEmail .= "</div>";
+
+    $mail->Body = $conteudoEmail;
+
+    $mail->send();
+
+}

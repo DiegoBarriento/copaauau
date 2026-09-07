@@ -88,7 +88,15 @@ end$$
 drop procedure if exists criarCliente$$
 create procedure criarCliente(pCpf varchar(15), pNome varchar(100), pSenha varchar(64))
 begin
-	insert into cliente(cd_cpf_cliente, nm_cliente, nm_senha) values (pCpf, pNome, pSenha);
+	DECLARE i int DEFAULT 1;
+	declare cdFig int;
+	select max(cd_figura) into cdFig from figura;
+	Insert into cliente values (pCpf, pNome, md5(pSenha));
+	WHILE i <= cdFig DO
+		Insert into album values (pCpf, i, 0);
+		select i;
+		set i = i + 1;
+	end while;
 END$$
 
 
