@@ -16,5 +16,10 @@ class ClienteController {
         Cliente::criarCliente($cpf,$nome, $senha);
     }
 
+    public static function verificarCliente($cpf){
+        $verificar = Cliente::verificarCliente($cpf);
+        return $verificar;
+
+    }
 }
 ?>

@@ -99,5 +99,11 @@ begin
 	end while;
 END$$
 
+drop procedure if exists verificarCliente$$
+create procedure verificarCliente(pCpf varchar(15))
+begin
+	select cd_cpf_cliente from cliente where cd_cpf_cliente = pCpf;
+end$$
+
 
 Delimiter ;

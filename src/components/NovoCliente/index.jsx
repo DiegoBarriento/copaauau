@@ -1,5 +1,7 @@
 import { useState} from "react";
 import {useNavigate} from "react-router-dom";
+import Carregando from "../Carregando";
+import  axios from "axios";
 
 export default function NovoCliente() {
     const [nome, setNome] = useState("");
@@ -7,7 +9,10 @@ export default function NovoCliente() {
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
     const [confirmaSenha, setConfirmaSenha] = useState("");
+    const [carregando, setCarregando] = useState(false);
     const [mensagem, setMensagem] = useState(null);
+
+    const [verifi, setVerifi] = useState(false);
 
     const navegador = useNavigate();
 
@@ -67,6 +72,7 @@ export default function NovoCliente() {
 
     function btnCriar_click(){
         setMensagem(null);
+        setCarregando()
         if (nome.trim() === ""){
             setMensagem("O nome deve ser informado.");
             return;
@@ -92,6 +98,8 @@ export default function NovoCliente() {
             return;
         }
 
+
+
         if (email.trim() === ""){
             setMensagem("O E-mail deve ser informado.");
             return;
@@ -112,14 +120,45 @@ export default function NovoCliente() {
             return;
         }
 
-        let cliente = {
+        const cliente = {
             "nome": nome.trim(),
             "cpf": cpf.trim(),
             "email": email.trim(),
             "senha": senha.trim()
         };
 
-        navegador('/CodigoVerificacao', {state: {status: 'novocliente', cliente: cliente}})
+        axios.post("http://localhost/copaauau/api/verificarcliente.php", 
+        {
+            /* conteudo do corpo JSON da requisicão */
+            'cpf' : cpf.trim(),
+        },
+        {
+            withCredentials: true,
+        }
+        ).then(function (resposta) {
+        if (resposta.status === 200 && resposta.data) {
+            console.log(resposta.data);
+            // A resposta veio SEM erros
+            const verificar = resposta.data.verificar || [];
+            if (verificar.length > 0) {
+                setMensagem("CPF já Cadastrado! Tente Logar Normalmente");
+                setCarregando(false);
+                setVerifi(true);
+                return;
+            }
+
+            navegador('/CodigoVerificacao', {state: {status: 'novocliente', cliente: cliente}});
+        } 
+        })
+        .catch(function (error) {
+        console.warn(error);
+        // O que fazer se der erro na requisição
+
+        })
+        .finally(function () {
+        // O que fazer independente de ter dado erro ou não
+            setCarregando(false)
+        });
 
     }
 
@@ -129,6 +168,7 @@ export default function NovoCliente() {
             <section className="fundoEntrada">
                 <section className="telaLogin">
                     <h1>Novo cliente</h1>
+                    {carregando ? <Carregando/> : null}
                     {mensagem !== null ? <div className='msg erro'>{mensagem}</div> : null}
                     <p>
                         <input placeholder="Informe seu Nome Completo" type="text" value={nome} onChange={txtNome_Change}/>
