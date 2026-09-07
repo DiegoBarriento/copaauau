@@ -70,7 +70,7 @@ end$$
 drop procedure if exists listarRepetidas$$
 create procedure listarRepetidas(pLogin varchar(15))
 begin
-	select cd_figura, qt_repetidas from figura_repetida;
+	select cd_figura, qt_repetidas from figura_repetida where cd_cpf_cliente = pLogin;
 end$$
 
 drop procedure if exists atualizarQuantidade$$
