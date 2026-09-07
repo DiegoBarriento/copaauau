@@ -10,10 +10,12 @@ export default function CodigoVerificacao() {
     const [codigo, setCodigo] = useState("");
     const [carregando, setCarregando] = useState(false);
     const [mensagem, setMensagem] = useState(null);
+    const [codigoVerificacao, setCodigoVerificacao] = useState("");
     const navegador = useNavigate();
 
     const cliente = location.state?.cliente;
     const status = location.state?.status;
+
     console.log(cliente.email);
     console.log(status);
 
@@ -29,7 +31,10 @@ export default function CodigoVerificacao() {
             }
         ).then(function (resposta) {
             // Tratar a resposta
-            const codigo = resposta.data.codigo;
+            console.log(resposta.data.codigo);
+            let codigoVerifi = resposta.data.codigo;
+            setCodigoVerificacao(codigoVerifi);
+            console.log("Código de verificação enviado: " + codigoVerificacao);
             setMensagem('Codigo enviado com Sucesso! Verifique seu e-mail.');
         }).catch(function (erro) {
             // Tratar o erro
@@ -45,8 +50,29 @@ export default function CodigoVerificacao() {
         setCodigo(e.target.value);
     }
 
+    function criarNovoCliente() {
+        console.log("novo cliente teste botao");
+    }
+
+    function recuperarSenha() {
+        console.log("recuperar senha");
+    }
+
     function btnVerificar_click() {
         setMensagem(null);
+
+        if (codigo !== codigoVerificacao) {
+            setMensagem("Código de verificação incorreto. Por favor, tente novamente.");
+            return;
+        }
+
+        if (status === 'novoCliente'){
+            criarNovoCliente();
+        }
+        else if (status === 'recuperarSenha'){
+            recuperarSenha();
+        }
+        
     }
     return (
         <>
@@ -54,7 +80,7 @@ export default function CodigoVerificacao() {
                 <section className="telaLogin">
                     <h1>Código de Veriicação</h1>
                     {carregando ? <Carregando/> : null}
-                    {mensagem !== null ? <div>{mensagem}</div> : null}
+                    {mensagem != null ? <div>{mensagem}</div> : null}
                     <p>
                         <input
                             placeholder="Informe o código enviado para seu E-mail"
