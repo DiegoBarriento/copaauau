@@ -88,24 +88,7 @@ end$$
 drop procedure if exists criarCliente$$
 create procedure criarCliente(pCpf varchar(15), pNome varchar(100), pSenha varchar(64))
 begin
-	declare done boolean default false;
-	declare figuraId int;
-	declare figuras cursor for select cd_figura from figura;
-	declare continue handler for not found set done = true;
-
 	insert into cliente(cd_cpf_cliente, nm_cliente, nm_senha) values (pCpf, pNome, pSenha);
-
-	open figuras;
-	album_loop: loop
-		fetch figuras into figuraId;
-		if done then
-			leave album_loop;
-		end if;
-
-		insert into album(cd_cpf_cliente, cd_figura, ic_possui)
-		values (pCpf, figuraId, 0);
-	end loop;
-	close figuras;
 END$$
 
 
