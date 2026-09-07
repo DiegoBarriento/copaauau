@@ -105,5 +105,12 @@ begin
 	select cd_cpf_cliente from cliente where cd_cpf_cliente = pCpf;
 end$$
 
+drop procedure if exists recuperarSenha$$
+create procedure RecuperarSenha(pCpf varchar(15))
+begin
+	select nm_senha from cliente where cd_cpf_cliente = pCpf;
+end$$
+
+
 
 Delimiter ;

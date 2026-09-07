@@ -21,5 +21,10 @@ class ClienteController {
         return $verificar;
 
     }
+
+    public static function recuperarSenha($cpf){
+        $senha = Cliente::recuperarSenha($cpf);
+        return $senha; 
+    }
 }
 ?>

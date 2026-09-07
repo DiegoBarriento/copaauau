@@ -5,12 +5,14 @@ import Album from "./components/Album";
 import Repetidas from "./components/Repetidas";
 import NovoCliente from "./components/NovoCliente";
 import CodigoVerificacao from "./components/CodigoVerificacao";
+import PedidoRecuperacao from "./components/PedidoRecuperacao";
 
 export default function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Login/>}/>
+        <Route path="/PedidoRecuperacao" element={<PedidoRecuperacao/>}/>
         <Route path="/novoCliente" element={<NovoCliente/>}/>
         <Route path="/CodigoVerificacao" element={<CodigoVerificacao/>}/>
         <Route path="/inicio" element={<Inicio/>}>

@@ -116,6 +116,36 @@ export default function CodigoVerificacao() {
 
     function recuperarSenha() {
         console.log("recuperar senha");
+        setCarregando(true);
+        axios.post("http://localhost/copaauau/api/recuperarsenha.php", 
+        {
+            /* conteudo do corpo JSON da requisicão */
+            'cpf' : cliente.cpf,
+        },
+        {
+            withCredentials: true,
+        }
+        ).then(function (resposta) {
+        if (resposta.status === 200 && resposta.data) {
+            console.log(resposta.data);
+            // A resposta veio SEM erros
+            setMensagem("Senha Recuperada! Redirecionando...")
+            const senha = resposta.data.senha[0];
+            console.log(senha);
+
+        } 
+        })
+        .catch(function (error) {
+        console.warn(error);
+        // O que fazer se der erro na requisição
+            setMensagem(error.response.data.mensagem || "Erro ao Recuperar Senha! Tente novamente.")
+        
+        })
+        .finally(function () {
+        // O que fazer independente de ter dado erro ou não
+            setCarregando(false);
+        });
+
     }
 
     function btnVerificar_click() {

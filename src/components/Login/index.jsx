@@ -24,6 +24,10 @@ export default function Login() {
         navegador('/novoCliente');
     }
 
+    function btnEsqueciSenha(){
+        navegador('/PedidoRecuperacao');
+    }
+
     function btnEntrar_Click() {
 
         setMensagem(null);
@@ -101,7 +105,7 @@ export default function Login() {
 
                     <div className="area_botoes">
                         <button className="linkBotao" onClick={btnCadastro}>Cadastre-se</button>
-                        <button className="linkBotao">Esqueci minha senha</button>
+                        <button className="linkBotao" onClick={btnEsqueciSenha}>Esqueci minha senha</button>
                         <button className="botao" onClick={btnEntrar_Click}>
                             <span className="material-symbols-outlined iconeBotao">login</span> Entrar
                         </button>
