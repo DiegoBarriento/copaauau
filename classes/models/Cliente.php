@@ -16,11 +16,12 @@ class Cliente extends Banco {
 		return self::Consultar('acessar', $parametros);
 	}
 
-	public static function criarCliente($cpf, $nome, $senha){
+	public static function criarCliente($cpf, $nome, $senha, $email){
 		$parametros = [
 			'pCpf'=>$cpf,
 			'pNome'=>$nome,
-			'pSenha'=>$senha
+			'pSenha'=>$senha,
+			'pEmail'=>$email
 		];
 		self::Executar('criarCliente', $parametros);
 	}

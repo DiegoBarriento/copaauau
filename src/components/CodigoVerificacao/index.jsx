@@ -63,6 +63,7 @@ export default function CodigoVerificacao() {
             'cpf' : cliente.Cpf,
             'nome' : cliente.Nome,
             'senha' :  cliente.Senha,
+            'email' : cliente.Email,
         },
         {
             withCredentials: true,

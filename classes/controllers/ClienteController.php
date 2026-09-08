@@ -12,8 +12,8 @@ class ClienteController {
         return $cliente;
     }
 
-    public static function criarCliente($cpf, $nome, $senha){
-        Cliente::criarCliente($cpf,$nome, $senha);
+    public static function criarCliente($cpf, $nome, $senha, $email){
+        Cliente::criarCliente($cpf,$nome, $senha, $email);
     }
 
     public static function verificarCliente($cpf){

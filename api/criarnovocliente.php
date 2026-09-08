@@ -25,15 +25,16 @@ try {
 	if (!validaCorpoRequisicao($corpo)) {
 		return;
 	}
-	$chaves = ['cpf','nome','senha'];
+	$chaves = ['cpf','nome','senha', 'email'];
 	if (!validaChaves($corpo, $chaves)) {
 		return;
 	}
 	$cpf = $corpo['cpf'];
 	$nome = $corpo['nome'];
 	$senha = $corpo['senha'];
+	$email = $corpo['email'];
 
-	ClienteController::criarCliente($cpf, $nome, $senha);
+	ClienteController::criarCliente($cpf, $nome, $senha, $email);
 	http_response_code(200);
 	echo json_encode(['status' => 'true']);
 } catch (Exception $erro) {

@@ -7,6 +7,7 @@ CREATE TABLE cliente
   cd_cpf_cliente VARCHAR(15),
   nm_cliente VARCHAR(100),
   nm_senha VARCHAR(64),
+  nm_email varchar(100),
   CONSTRAINT pk_cliente PRIMARY KEY (cd_cpf_cliente)
 );
 
@@ -168,8 +169,8 @@ Insert into figura values (108, 'Francesco', 9);
 Insert into figura values (109, 'Teppy', 9);
 Insert into figura values (110, 'Fachada Clube Au Au', 0);
 
-Insert into cliente values ('27765728978', 'Frederico Arco e Flexa Machado Justo', md5('123'));
-Insert into cliente values ('11111111111', 'Luiz Carlos Rodrigues Tavares', md5('123'));
+Insert into cliente values ('27765728978', 'Frederico Arco e Flexa Machado Justo', md5('123'), 'freed@outlook.com');
+Insert into cliente values ('11111111111', 'Luiz Carlos Rodrigues Tavares', md5('123'), 'tavares@outlook.com');
 
 Insert into album values ('27765728978',  1, 0);
 Insert into album values ('27765728978',  2, 1);
