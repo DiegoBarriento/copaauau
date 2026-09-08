@@ -26,5 +26,9 @@ class ClienteController {
         $senha = Cliente::recuperarSenha($cpf);
         return $senha; 
     }
+
+    public static function atualisarSenha($cpf,$senha){
+        Cliente::atualisarSenha($cpf,$senha);
+    }
 }
 ?>

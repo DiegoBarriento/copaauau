@@ -111,6 +111,11 @@ begin
 	select nm_senha from cliente where cd_cpf_cliente = pCpf;
 end$$
 
+drop procedure if exists criarNovaSenha$$
+create procedure criarNovaSenha(pCpf varchar(15), pSenha varchar(64))
+begin
+	update cliente set nm_senha = md5(pSenha) where cd_cpf_cliente = pCpf;
+end$$
 
 
 Delimiter ;

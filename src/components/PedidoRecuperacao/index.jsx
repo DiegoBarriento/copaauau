@@ -106,8 +106,8 @@ export default function PedidoRecuperacao() {
             }
 
             const cliente = {
-            "cpf": cpf.trim(),
-            "email": email.trim()
+            "Cpf": cpf.trim(),
+            "Email": email.trim()
             };
             navegador('/CodigoVerificacao', {state: {status: 'recuperarsenha', cliente: cliente}});
         } 

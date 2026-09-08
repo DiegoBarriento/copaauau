@@ -6,6 +6,7 @@ import Repetidas from "./components/Repetidas";
 import NovoCliente from "./components/NovoCliente";
 import CodigoVerificacao from "./components/CodigoVerificacao";
 import PedidoRecuperacao from "./components/PedidoRecuperacao";
+import RedefinirSenha from "./components/RedefinirSenha";
 
 export default function App() {
   return (
@@ -13,6 +14,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Login/>}/>
         <Route path="/PedidoRecuperacao" element={<PedidoRecuperacao/>}/>
+        <Route path="/redefinirSenha" element={<RedefinirSenha/>}/>
         <Route path="/novoCliente" element={<NovoCliente/>}/>
         <Route path="/CodigoVerificacao" element={<CodigoVerificacao/>}/>
         <Route path="/inicio" element={<Inicio/>}>

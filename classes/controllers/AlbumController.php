@@ -6,6 +6,7 @@ class AlbumController {
         $album = new Album();
         $resultado = Album::Listar($cpf);
         $repetidas = Figurinha::ListarRepetidas($cpf);
+        $qtdRep = 0;
         foreach ($resultado as $linha) {
             // aqui preenche as figurinhas
             foreach ($repetidas as $rep) {

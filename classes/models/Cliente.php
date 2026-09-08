@@ -36,7 +36,15 @@ class Cliente extends Banco {
 		$parametros = [
 			'pCpf'=>$cpf
 		];
-		return self::Consultar('verificarSenha', $parametros);
+		return self::Consultar('recuperarSenha', $parametros);
+	}
+
+	public static function atualisarSenha($cpf,$senha){
+		$parametros = [
+			'pCpf'=>$cpf,
+			'pSenha'=>$senha
+		];
+		self::Consultar('criarNovaSenha', $parametros);
 	}
 }
 ?>

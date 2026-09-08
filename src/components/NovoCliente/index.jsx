@@ -121,10 +121,10 @@ export default function NovoCliente() {
         }
 
         const cliente = {
-            "nome": nome.trim(),
-            "cpf": cpf.trim(),
-            "email": email.trim(),
-            "senha": senha.trim()
+            "Nome": nome.trim(),
+            "Cpf": cpf.trim(),
+            "Email": email.trim(),
+            "Senha": senha.trim()
         };
 
         axios.post("http://localhost/copaauau/api/verificarcliente.php", 

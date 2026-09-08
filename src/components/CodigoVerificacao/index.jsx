@@ -16,7 +16,7 @@ export default function CodigoVerificacao() {
     const cliente = location.state.cliente;
     const status = location.state.status;
 
-    console.log(cliente.email);
+    console.log(cliente.Email);
     console.log(status);
 
 
@@ -24,7 +24,7 @@ export default function CodigoVerificacao() {
         setCarregando(true);
         axios.post("http://localhost/copaauau/api/enviarCodigo.php",
             {
-                'email': cliente.email,
+                'email': cliente.Email,
             },
             {
                 withCredentials: true,
@@ -60,9 +60,9 @@ export default function CodigoVerificacao() {
         axios.post("http://localhost/copaauau/api/criarnovocliente.php", 
         {
             /* conteudo do corpo JSON da requisicão */
-            'cpf' : cliente.cpf,
-            'nome' : cliente.nome,
-            'senha' :  cliente.senha,
+            'cpf' : cliente.Cpf,
+            'nome' : cliente.Nome,
+            'senha' :  cliente.Senha,
         },
         {
             withCredentials: true,
@@ -72,10 +72,10 @@ export default function CodigoVerificacao() {
             console.log(resposta.data);
             // A resposta veio SEM erros
             setMensagem("Conta criada com sucesso! Redirecionando...")
-             axios.post("http://localhost/copaauau/api/acessar.php",
+            axios.post("http://localhost/copaauau/api/acessar.php",
             {
-                "login": cliente.cpf,
-                "senha": cliente.senha
+                "login": cliente.Cpf,
+                "senha": cliente.Senha
             },
             {
                 withCredentials: true,
@@ -117,34 +117,36 @@ export default function CodigoVerificacao() {
     function recuperarSenha() {
         console.log("recuperar senha");
         setCarregando(true);
-        axios.post("http://localhost/copaauau/api/recuperarsenha.php", 
-        {
-            /* conteudo do corpo JSON da requisicão */
-            'cpf' : cliente.cpf,
-        },
-        {
-            withCredentials: true,
-        }
-        ).then(function (resposta) {
-        if (resposta.status === 200 && resposta.data) {
-            console.log(resposta.data);
-            // A resposta veio SEM erros
-            setMensagem("Senha Recuperada! Redirecionando...")
-            const senha = resposta.data.senha[0];
-            console.log(senha);
+        navegador('/redefinirSenha', {state: {'cliente':cliente}});
+        setCarregando(false);
+        // axios.post("http://localhost/copaauau/api/recuperarsenha.php", 
+        // {
+        //     /* conteudo do corpo JSON da requisicão */
+        //     'cpf' : cliente.cpf,
+        // },
+        // {
+        //     withCredentials: true,
+        // }
+        // ).then(function (resposta) {
+        // if (resposta.status === 200 && resposta.data) {
+        //     console.log(resposta.data);
+        //     // A resposta veio SEM erros
+        //     setMensagem("Senha Recuperada! Redirecionando...")
+        //     const senha = resposta.data.senha[0];
+        //     console.log(senha);
 
-        } 
-        })
-        .catch(function (error) {
-        console.warn(error);
-        // O que fazer se der erro na requisição
-            setMensagem(error.response.data.mensagem || "Erro ao Recuperar Senha! Tente novamente.")
+        // } 
+        // })
+        // .catch(function (error) {
+        // console.warn(error);
+        // // O que fazer se der erro na requisição
+        //     setMensagem(error.response.data.mensagem || "Erro ao Recuperar Senha! Tente novamente.")
         
-        })
-        .finally(function () {
-        // O que fazer independente de ter dado erro ou não
-            setCarregando(false);
-        });
+        // })
+        // .finally(function () {
+        // // O que fazer independente de ter dado erro ou não
+        //     setCarregando(false);
+        // });
 
     }
 

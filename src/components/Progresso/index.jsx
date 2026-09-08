@@ -7,7 +7,11 @@ export default function Progresso(props) {
 
     useEffect(()=>{
         setPorcentagem((atual*100)/total);
+        if(porcentagem === NaN || porcentagem === null){
+            setPorcentagem(0);
+        }
     }, [total, atual]); 
+
 
     return (
         <section className="areaProgresso">
